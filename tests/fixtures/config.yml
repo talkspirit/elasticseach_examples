@@ -10,7 +10,7 @@ elastica:
                 autocomplete:
                     type: custom
                     tokenizer: standard
-                    filter: [asciifolding, lowercase,french_stem, stop, kstem, ngram]
+                    filter: [lowercase, stop, kstem, ngram]
             filter :
                 ngram :
                     type : ngram
