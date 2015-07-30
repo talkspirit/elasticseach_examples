@@ -1,0 +1,2 @@
+# elasticseach_examples
+Tests different Elasticsearch configurations
