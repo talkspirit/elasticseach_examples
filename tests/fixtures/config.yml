@@ -1,0 +1,45 @@
+elastica:
+    settings:
+        analysis :
+            analyzer :
+                default:
+                    type: french
+                folding :
+                    tokenizer : standard
+                    filter : [asciifolding, lowercase, french_stem, stop]
+                autocomplete:
+                    type: custom
+                    tokenizer: standard
+                    filter: [asciifolding, lowercase,french_stem, stop, kstem, ngram]
+            filter :
+                ngram :
+                    type : ngram
+                    min_gram: 1
+                    max_gram : 15
+    indexes:
+        index:
+            index_name: "test"
+            types:
+                user:
+                    mappings:
+                        autocomplete:
+                            type : string
+                            analyzer : autocomplete
+                            include_in_all : false
+                        displayname:
+                            type : string
+                            include_in_all : true
+                        username:
+                            type: string
+                            include_in_all: true
+                        role:
+                            type: long
+                        status:
+                            type: long
+                        subscriber_since:
+                            type: date
+                            format: dateOptionalTime
+                            include_in_all :  false
+                        groups:
+                            type: nested
+                            include_in_all :  false
