@@ -18,7 +18,7 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
         $filename = __DIR__ . '/../../../fixtures/config.yml';
         $config = Yaml::parse(file_get_contents($filename));
         $client = new Client();
-        $indexParams = array('index' => array('number_of_shards' => 1, 'number_of_replicas' => 1));
+        $indexParams = array('index' => array('number_of_shards' => 1, 'number_of_replicas' => 0));
         $index = $client->getIndex($config['elastica']['indexes']['index']['index_name']);
         $index->create($indexParams, true);
         sleep(1);
@@ -35,7 +35,9 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
 
     private function search($query)
     {
-        return $this->index->search(json_decode($query, true));
+        $data = json_decode($query, true);
+        $this->assertTrue(is_array($data), "$query is not a json valid string");
+        return $this->index->search($data);
     }
     /**
      * @test
@@ -98,5 +100,11 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
         /** @var Elastica\ResultSet */
         $resultSet = $this->search($query);
         $this->assertEquals(1, $resultSet->getTotalHits(), $query);
+
+        $query = '{"query":{"term":{"autocomplete":"oussef"}}}';
+        /** @var Elastica\ResultSet */
+        $resultSet = $this->search($query);
+        $this->assertEquals(1, $resultSet->getTotalHits(), $query);
+
     }
 }

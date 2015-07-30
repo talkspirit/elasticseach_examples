@@ -2,6 +2,7 @@ elastica:
     settings:
         analysis :
             analyzer :
+                #curl 'http://localhost:9200/test/_analyze?tokenizer=standard&filters=asciifolding,french_stem,lowercase&pretty=true' -d "jé"
                 default:
                     type: french
                 folding :
@@ -24,7 +25,7 @@ elastica:
                     mappings:
                         autocomplete:
                             type : string
-                            analyzer : autocomplete
+                            analyzer: autocomplete
                             include_in_all : false
                         displayname:
                             type : string
