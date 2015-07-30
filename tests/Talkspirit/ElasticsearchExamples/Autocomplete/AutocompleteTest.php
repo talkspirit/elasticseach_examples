@@ -51,7 +51,7 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
             'status' => 1,
             'groups' => ['id' => 'group1', 'id' => 'group2']
         )));
-        $type->addDocument(new Document(1, array(
+        $type->addDocument(new Document(2, array(
             'username' => 'jeremie',
             'displayname' => 'Jérémie Doe',
             'autocomplete' => 'jeremie jérémie doe',
@@ -60,7 +60,7 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
         )));
         $index->refresh();
 
-        $query = '{"query":{"term":{"autocomplete":"o"}}}';
+        $query = '{"query":{"term":{"autocomplete":"ol"}}}';
         /** @var Elastica\ResultSet */
         $resultSet = $this->search($query);
         $this->assertEquals(1, $resultSet->getTotalHits(), $query);
@@ -70,16 +70,15 @@ class AutocompleteTest extends \PHPUnit_Framework_TestCase
         $resultSet = $this->search($query);
         $this->assertEquals(1, $resultSet->getTotalHits(), $query);
 
-        $query = '{"query":{"match":{"autocomplete":"jé"}}}';
+        $query = '{"query":{"term":{"autocomplete":"je"}}}';
         /** @var Elastica\ResultSet */
         $resultSet = $this->search($query);
         $this->assertEquals(1, $resultSet->getTotalHits(), $query);
 
-
+        // todo the term should be found
         $query = '{"query":{"term":{"autocomplete":"jé"}}}';
         /** @var Elastica\ResultSet */
         $resultSet = $this->search($query);
         $this->assertEquals(0, $resultSet->getTotalHits(), $query);
-
     }
 }
