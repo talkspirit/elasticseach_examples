@@ -13,4 +13,4 @@ dependencies:
 
 test:
     override:
-    - make ci_tests
+    - make tests
