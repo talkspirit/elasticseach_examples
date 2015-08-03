@@ -1,5 +1,7 @@
 # Elasticseach Examples
 
+[![Circle CI](https://circleci.com/gh/talkspirit/elasticseach_examples.svg?style=svg)](https://circleci.com/gh/talkspirit/elasticseach_examples)
+
 Gather some examples on different configurations of Elasticseach
 
 The examples used the elastica library
